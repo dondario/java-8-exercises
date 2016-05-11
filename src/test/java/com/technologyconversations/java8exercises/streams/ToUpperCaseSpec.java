@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.technologyconversations.java8exercises.streams.ToUpperCase.*;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /*
@@ -17,7 +17,15 @@ public class ToUpperCaseSpec {
     public void transformShouldConvertCollectionElementsToUpperCase() {
         List<String> collection = asList("My", "name", "is", "John", "Doe");
         List<String> expected = asList("MY", "NAME", "IS", "JOHN", "DOE");
-        assertThat(transform(collection)).hasSameElementsAs(expected);
+
+        assertThat(noddy(collection)).hasSameElementsAs(expected);
     }
+
+    private List<String> noddy(List<String> collection) {
+        return collection.stream()
+                .map(String::toUpperCase)
+                .collect(toList());
+    }
+
 
 }
