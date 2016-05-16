@@ -15,11 +15,11 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class RomanNumerals {
 
-    private Converter underTest;
+    private NumeralConverter underTest;
 
     @Before
     public void setUp() throws Exception {
-        underTest = new Converter();
+        underTest = new NumeralConverter(new Numerals());
     }
 
     @Test
@@ -35,8 +35,8 @@ public class RomanNumerals {
     }
 
     @Test
-    public void convertShouldThrowNegativeNumberIfValueCantBeCalculated(){
-        assertThat(underTest.convertToInt("A"), equalTo(-1));
+    public void convertShouldHaveValueOfZeroIfNumberCannotBeCalculated(){
+        assertThat(underTest.convertToInt("A"), equalTo(0));
     }
 
     @Test
@@ -47,10 +47,22 @@ public class RomanNumerals {
     }
 
     @Test
-    public void ifASmallerNumberComesBeforeALargerNumberItShouldBeAdded(){
+    public void ifASmallerNumberComesBeforeALargerNumberItShouldBeDeducted(){
      Assert.assertThat(underTest.convertToInt("IV"), CoreMatchers.is(IsEqual.equalTo(4)));
      Assert.assertThat(underTest.convertToInt("IX"), CoreMatchers.is(IsEqual.equalTo(9)));
      Assert.assertThat(underTest.convertToInt("XC"), CoreMatchers.is(IsEqual.equalTo(90)));
+    }
+
+    @Test
+    public void ifASmallerNumberComesBeforeALargerNumberItShouldBeAdded(){
+        Assert.assertThat(underTest.convertToInt("VI"), CoreMatchers.is(IsEqual.equalTo(6)));
+        Assert.assertThat(underTest.convertToInt("XI"), CoreMatchers.is(IsEqual.equalTo(11)));
+        Assert.assertThat(underTest.convertToInt("CX"), CoreMatchers.is(IsEqual.equalTo(110)));
+    }
+
+    @Test
+    public void aLotOfNumbers(){
+        Assert.assertThat(underTest.convertToInt("MMXVI"), CoreMatchers.is(IsEqual.equalTo(2016)));
     }
 
 
